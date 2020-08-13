@@ -69,7 +69,7 @@ user1.increment();
 
 //using new & this keyword in prototype -------------
 function userCreater(name, score) {
-	const newUser = Object.create();
+	const newUser = Object.create(userFuncionStore);
 	newUser.name = name;
 	newUser.score = score;
 	return newUser;
@@ -83,11 +83,13 @@ const userFuncionStore = {
 const user1 = new userCreater("Phill", 4);
 //"new"-automate 2 things
 	//1. create a newuser object
+	//2. set the __proto__
 	//2. return the new user objcet
 
 const user2 = new userCreater("Julia", 5);
 //"new"-automate 2 things
 	//1. create a newuser object
+	//2. set the __proto__
 	//2. return the new user objcet
 
 user1.increment();
@@ -99,6 +101,7 @@ user1.increment();
 
 
 
+// COMBO = FUNCTION + OBJECT
 function multiplyBy2(num) {
 	return num*2;
 }
@@ -110,3 +113,160 @@ multiplyBy2.stored; //5
 multiplyBy2.prototype; //{} this is a regular property on the function in its object format.
 
 // multiplyBy2 is a combo of function and object
+
+
+
+
+
+// use protype
+function UserCreator(name, score) {
+	this.name = name;
+	this.score = score;
+}
+
+UserCreator.prototype.increment = function() {
+	this.score++;
+}
+UserCreator.prototype.login = function() {
+	this.log("login");
+}
+
+const user1 = new UserCreator("Eva", 9);
+user1.increment();
+
+//Benifit
+	//fast to write
+	//still typical practice in professional code
+
+
+
+
+
+
+
+// use protype
+function UserCreator(name, score) {
+	this.name = name;
+	this.score = score;
+}
+
+UserCreator.prototype.increment = function() {
+	function add1() {
+		this.score++; // object ke LHS before dot notation not found any object and then "this" is refer to window object.
+	}
+	add1();
+}
+UserCreator.prototype.login = function() {
+	this.log("login");
+}
+
+const user1 = new UserCreator("Eva", 9);
+user1.increment();
+
+
+
+
+
+
+
+
+
+// use protype
+function UserCreator(name, score) {
+	this.name = name;
+	this.score = score;
+}
+
+UserCreator.prototype.increment = function() {
+	const add1 = () => { this.score++; } //this is refer to parent side which object is called this method 
+	// 
+	add1();
+}
+UserCreator.prototype.login = function() {
+	this.log("login");
+}
+
+const user1 = new UserCreator("Eva", 9);
+user1.increment();
+
+
+
+
+
+
+
+
+// class
+//--------------------------------------------------
+function UserCreator(name, score) {             // |
+	this.name = name;						    // |
+	this.score = score;                         // |
+}												// |
+//--------------------------------------------------
+//constructor bit sapratly - shared method
+//the class is syntactic sugar :
+	//means nothing has changed under the hood.
+
+												// |
+UserCreator.prototype.increment = function() {  // |
+	this.score++;								// |
+}												// |
+UserCreator.prototype.login = function() {		// |
+	this.log("login");							// |
+} 												// |
+
+const user1 = new UserCreator("Eva", 9);
+user1.increment();
+
+
+//
+//			     |--|
+//			     |  |
+//			     |  |
+//			     |__|
+//			    \    /
+//			     \  /
+//			      \/
+
+
+// class
+//--------------------------------------------------
+function UserCreator(name, score) {             // |
+	this.name = name;						    // |
+	this.score = score;                         // |
+}												// |
+//--------------------------------------------------
+//constructor bit sapratly - shared method
+//the class is syntactic sugar :
+	//means nothing has changed under the hood.
+
+												// |
+UserCreator.prototype.increment = function() {  // |
+	this.score++;								// |
+}												// |
+UserCreator.prototype.login = function() {		// |
+	this.log("login");							// |
+} 												// |
+
+const user1 = new UserCreator("Eva", 9);
+user1.increment();
+
+// Emerging as a new standard
+// feels more like style of other languages(e.g. Python)
+
+
+
+
+
+
+
+
+
+const obj = {
+	num: 3
+}
+
+obj.num //3
+obj.hasOwnProperty("num")  //where this method
+
+Object.prototype // hasOwnProperty: FUNCTION
