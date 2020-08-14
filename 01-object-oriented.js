@@ -41,7 +41,7 @@ user1.increment();
 
 //  prototype chain -------------
 function userCreater(name, score) {
-	const newUser = Object.create();
+	const newUser = Object.create(userFuncionStore);
 	newUser.name = name;
 	newUser.score = score;
 	return newUser;
@@ -261,7 +261,8 @@ user1.increment();
 
 
 
-
+// javascritp object link to the proto and
+// inside of __proto__ defalt bounch of functionality
 const obj = {
 	num: 3
 }
@@ -269,4 +270,57 @@ const obj = {
 obj.num //3
 obj.hasOwnProperty("num")  //where this method
 
+// how to find hasOwnProperty
+	// -> obj
+	// -> __proto__
+	// -> Object
+	// -> prototype
+	// -> hasOwnProperty 
+
 Object.prototype // hasOwnProperty: FUNCTION
+
+
+
+
+
+
+
+
+// VIDEO LATCHER NAME : Function.prototype and Array.prototype
+function multiplyBy2(num) {
+	return num*2
+}
+
+multiplyBy2.toString() // find in global
+
+// how to find toSting method
+	// -> look into function + object combo (this fun. is object form)
+	// -> Inside which proto object will be found
+	// -> __proto__ is linked to the prototype methods
+	// -> some method inside of the prototype
+		// -> toString()
+		// -> call()
+		// -> bind()
+		// -> apply()
+
+Function.prototype //{toString: FUNCTION, call: FUNCTION, bind: FUNCTION}
+
+
+multiplyBy2.hasOwnProperty("score");
+// how to find toSting method
+	// -> look into function + object combo (this fun. is object form)
+	// -> Inside which proto object will be found
+	// -> __proto__ is linked to the prototype methods
+	// -> some method inside of the prototype
+		// -> toString()
+		// -> call()
+		// -> bind()
+		// -> apply()
+		// -> __proto__ : linked to another Prototype Object 
+			// -> hasOwnProperty()
+			// -> __proto__ : NULL
+
+
+Function.prototype.__proto__ //Object.prototype {hasOwnProperty: FUNCTION}
+
+
