@@ -1,42 +1,41 @@
 // Subclassing Solution 2 ---------------
 
+//using new & this keyword in prototype -------------
 function userCreater(name, score) {
-	const newUser = Object.create(userFuncion);
+	const newUser = Object.create(userFuncions);
 	newUser.name = name;
 	newUser.score = score;
 	return newUser;
 }
 
-const userFuncion = {
-	sayName: function() { console.log("I'm " + this.name) },
-	increment: function() { this.score++; }
+const userFuncions = {
+	sayName: function() { console.log("I'm " + this.name); },
+	increment: function() { this.score++; },
 }
 
 const user1 = userCreater("Phill", 4);
 const user2 = userCreater("Julia", 5);
-user1.increment();
 
+user1.increment();
 
 function paidUserCreator(paidName, paidScore, accountBalance) {
 	const newPaidUser = userCreater(paidName, paidScore);
-	Object.setPrototypeOf(newPaidUser, paidUserFunction);
+	Object.setPrototypeOf(newPaidUser, paidUserFunctions);
 	newPaidUser.accountBalance = accountBalance;
-
+	return newPaidUser;
 }
 
-const paidUserFunction = {
-	increaseBalance : function() {
+const paidUserFunctions = {
+	increaseBalance : function () {
 		this.accountBalance++;
 	}
-};
+}
 
-Object.setPrototypeOf(paidUserFunction, userCreater);
+Object.setPrototypeOf(paidUserFunctions, userFuncions);
 
 const paidUser1 = paidUserCreator("Alyssa", 8, 25);
-
 paidUser1.increaseBalance();
-
-paidUser1.sayName();  // "I'm Alyssa"
+paidUser1.sayName();
 
 
 
@@ -84,44 +83,47 @@ obj.increment.apply(otherObj);
 
 // Subclassing Solution 3 new kyeword  -------------------------
 
-function userCreater(name, score) {
+//using new & this keyword in prototype -------------
+function userCreator(name, score) {
 	this.name = name;
 	this.score = score;
-	return newUser;
 }
 
-userCreater.prototype.sayName = function() {
-	console.log("I'm " + this.name)
-};
-userCreater.prototype.increment = function() {
+userCreator.prototype.sayName = function() {
+	console.log("I'm " + this.name);
+}
+userCreator.prototype.increment = function() {
 	this.score++;
-};
+}
 
-const user1 = new userCreater("Phill", 4);
-const user2 = new userCreater("Timm", 4);
-// create obj, set __proto__, return label this obj
+const user1 = new userCreator("Phill", 4);
+const user2 = new userCreator("Julia", 5);
+
 user1.increment();
 
-// ..
-
 function paidUserCreator(paidName, paidScore, accountBalance) {
-	userCreater.call(this, [paidName, paidScore]);
-	// userCreater.apply(this, [paidName, paidScore]);
+	userCreator.call(this, paidName, paidScore);
 	this.accountBalance = accountBalance;
+
+	// ----------
+	// const newPaidUser = userCreator(paidName, paidScore);
+	// Object.setPrototypeOf(newPaidUser, paidUserFunctions);
+	// newPaidUser.accountBalance = accountBalance;
+	// return newPaidUser;
 }
 
-paidUserCreator.prototype = Object.create(userCreater.prototype);
+paidUserCreator.prototype = Object.create(userCreator.prototype)
 
-paidUserCreator.prototype.increaseBalance = function() {
+paidUserCreator.prototype.increaseBalance =function () {
 	this.accountBalance++;
-};
+}
+
+// Object.setPrototypeOf(paidUserFunctions, userFuncions);  // this is same work line 30
 
 
 const paidUser1 = new paidUserCreator("Alyssa", 8, 25);
-
 paidUser1.increaseBalance();
-
-paidUser1.sayName();  // "I'm Alyssa" 
+paidUser1.sayName();
 
 
 

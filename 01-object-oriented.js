@@ -1,4 +1,7 @@
 
+// https://csx.codesmith.io/units/object-oriented-programming/intro-oop
+// Object– An Object is a unique entity which contains property and methods.
+
 
 const user2 = {}; // object literal
 const user3 = Object.create(null); // object
@@ -83,13 +86,11 @@ const userFuncionStore = {
 const user1 = new userCreater("Phill", 4);
 //"new"-automate 2 things
 	//1. create a newuser object
-	//2. set the __proto__
 	//2. return the new user objcet
 
 const user2 = new userCreater("Julia", 5);
 //"new"-automate 2 things
 	//1. create a newuser object
-	//2. set the __proto__
 	//2. return the new user objcet
 
 user1.increment();
