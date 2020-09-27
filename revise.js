@@ -63,7 +63,9 @@ function PaidUserCreate01(fName, lName, country) {
 
 let paidUserObj01 = {
     getFullDetails() {
-        return `My name is ${this.fullName()} and i am living in ${this.country}.`;
+        return `My name is ${this.fullName()} and i am living in ${
+            this.country
+        }.`;
     },
 };
 Object.setPrototypeOf(paidUserObj01, userObj);
@@ -110,10 +112,10 @@ class UserCreate2 {
         this.fName = fName;
         this.lName = lName;
     }
-    
+
     fullName() {
         return `${this.fName} ${this.lName}`;
-    };
+    }
 }
 
 let getData2 = new UserCreate2('Aman', 'silawat');
@@ -125,11 +127,130 @@ class PaidUserCreate2 extends UserCreate2 {
         super(fName, lName);
         this.country = country;
     }
-    
+
     getFullDetails() {
-        return `My name is ${this.fullName()} and i am living in ${this.country}.`;
-    };
+        return `My name is ${this.fullName()} and i am living in ${
+            this.country
+        }.`;
+    }
 }
 
 let paidUser2 = new PaidUserCreate2('Aman', 'silawat', 'India');
 paidUser2.getFullDetails(); //My name is Aman silawat and i am living in India.
+
+// ..
+// ....
+// ......
+// ******** Reflect.construct() ********
+
+function func1(a, b, c) {
+    this.sum = a + b + c;
+}
+
+const args = [1, 2, 3];
+const object1 = new func1(...args);
+const object2 = Reflect.construct(func1, args);
+
+object2.sum; // expected output: 6
+object1.sum; // expected output: 6
+
+// example  (diff Object.create and Reflect.construct)
+function OneClass() {
+    this.name = 'one';
+    this.ageOne = 1;
+}
+
+function OtherClass() {
+    this.name = 'other';
+    this.ageOther = 2;
+}
+
+// Calling this:
+let obj11 = Reflect.construct(OneClass, args, OtherClass);
+
+// ...has the same result as this:
+let obj22 = Object.create(OtherClass.prototype);
+OneClass.apply(obj22, args);
+
+console.log(obj11); // OtherClass {name: "one", ageOne: 1} (? inside OneClass properties)
+console.log(obj22); // OtherClass {name: "one", ageOne: 1} (? inside OneClass properties)
+
+console.log(obj11 instanceof OneClass); // false
+console.log(obj22 instanceof OneClass); // false
+
+console.log(obj11 instanceof OtherClass); // true
+console.log(obj22 instanceof OtherClass); // true
+
+function OneClassA() {
+    console.log('OneClassA');
+    console.log(new.target);
+}
+function OtherClassA() {
+    console.log('OtherClassA');
+    console.log(new.target);
+}
+
+// let ob1 = Reflect.construct(OneClassA, args)
+// // Output:
+// //     OneClassA
+// //     function OneClassA { ... }
+
+// let ob2 = Reflect.construct(OneClassA, args, OtherClassA)
+// // Output:
+// //     OneClassA
+// //     function OtherClassA { ... }
+
+// let ob3 = Object.create(OtherClassA.prototype);
+// OneClassA.apply(ob3, args)
+// // Output:
+// //     OneClassA
+// //     undefined
+
+// ..
+// ....
+// ......
+// check instanse of
+let d = Reflect.construct(Date, [1776, 6, 4]);
+d instanceof Date; // true
+d.getFullYear(); // 1776
+
+console.log(d);
+console.log(Date.prototype);
+
+// ..
+// ....
+// ......
+// push array into array without loop
+const array = ['a', 'b'];
+const elements = [0, 1, 2];
+array.push.apply(array, elements);
+array; // ["a", "b", 0, 1, 2]
+
+// ..
+// ....
+// ......
+// min/max number in an array
+const numbers = [5, 6, 2, 3, 7];
+
+// using Math.min/Math.max apply
+let max = Math.max.apply(null, numbers);
+// This about equal to Math.max(numbers[0], ...)
+// or Math.max(5, 6, ...)
+max; // 7
+
+// ..
+// ....
+// ......
+// find min max using simple loop
+let minVal = +Infinity;
+let maxVal = -Infinity;
+for (const val of numbers) {
+    if (val > maxVal) {
+        maxVal = val;
+    }
+
+    if (val < minVal) {
+        minVal = val;
+    }
+}
+console.log(minVal, maxVal);
