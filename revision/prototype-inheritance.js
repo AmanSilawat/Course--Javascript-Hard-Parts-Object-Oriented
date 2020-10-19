@@ -17,7 +17,7 @@ person1.getFullName(); // Aman Silawat
 
 // Create Another function
 function StudentPerson(fName, lName, producName, schoolId) {
-    let paidUser = Person.call(this, fName, lName, producName);
+    Person.call(this, fName, lName, producName);
     this.schoolId = schoolId;
 }
 
@@ -29,6 +29,6 @@ StudentPerson.prototype.getId = function() {
 }
 
 //create constructor functing using new keyword
-student = new StudentPerson('Aman', 'Silawat', 'Dell i3 Laptop', '10255');
+student = new StudentPerson('Rahul', 'Yadav', 'Dell i5 Laptop', '10255');
 student.getId(); // 10255
 student.getFullName(); // Aman Silawat
